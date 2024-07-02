@@ -12,6 +12,16 @@ part 'food_detail_event.dart';
 class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
   FoodDetailBloc() : super(FoodDetailInitialState()) {
     on<FoodDetailGetFoodEvent>(foodDetailGetFoodEvent);
+    on<FoodDetailFavoriteTappedEvent>(foodDetailFavoriteTappedEvent);
+  }
+
+  void foodDetailFavoriteTappedEvent(
+      FoodDetailFavoriteTappedEvent event, Emitter<FoodDetailState> emit) {
+    if (state is FoodDetailGetFoodSuccessState) {
+      final currentState = state as FoodDetailGetFoodSuccessState;
+      emit(FoodDetailGetFoodSuccessState(
+          food: currentState.food, isFavorite: event.isFavorite));
+    }
   }
 
   FutureOr<void> foodDetailGetFoodEvent(
@@ -20,7 +30,7 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
       emit(FoodDetailInitialState());
       FoodEntity food =
           await serviceLocator<GetFoodDetailUseCase>().call(event.id);
-      emit(FoodDetailGetFoodSuccessState(food));
+      emit(FoodDetailGetFoodSuccessState(food: food, isFavorite: false));
     } catch (e) {
       emit(FoodDetailGetFoodErrorState("Error get food"));
     }

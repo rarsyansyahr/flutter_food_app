@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_food_app/core/utils/split_food_fields_util.dart';
 import 'package:flutter_food_app/features/foods/domain/entity/food_entity.dart';

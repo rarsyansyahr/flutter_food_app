@@ -11,10 +11,12 @@ class FoodDetailLoadingState extends FoodDetailState {}
 
 class FoodDetailGetFoodSuccessState extends FoodDetailState {
   final FoodEntity food;
-  FoodDetailGetFoodSuccessState(this.food);
+  final bool isFavorite;
+
+  FoodDetailGetFoodSuccessState({required this.food, required this.isFavorite});
 
   @override
-  List<Object> get props => [food];
+  List<Object> get props => [food, isFavorite];
 }
 
 class FoodDetailGetFoodErrorState extends FoodDetailState {
@@ -24,3 +26,12 @@ class FoodDetailGetFoodErrorState extends FoodDetailState {
   @override
   List<Object> get props => [message];
 }
+
+// class FoodDetailFavoriteState extends FoodDetailState {
+//   final bool isFavorite;
+
+//   FoodDetailFavoriteState(this.isFavorite);
+
+//   @override
+//   List<Object> get props => [isFavorite];
+// }

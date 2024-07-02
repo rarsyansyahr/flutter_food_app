@@ -18,8 +18,10 @@ class FoodDetailGetFoodEvent extends FoodDetailEvent {
 
 class FoodDetailFavoriteTappedEvent extends FoodDetailEvent {
   final bool isFavorite;
+  final FoodEntity food;
 
-  const FoodDetailFavoriteTappedEvent({required this.isFavorite});
+  const FoodDetailFavoriteTappedEvent(
+      {required this.isFavorite, required this.food});
 
   @override
   List<Object> get props => [isFavorite];

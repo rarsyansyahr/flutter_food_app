@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/core/di/service_locator.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/bloc/favorite_food_list_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_list_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/main_foods_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_list/favorite_food_list.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/food_list_screen.dart';
 
 class BottomMenuItem {
@@ -24,8 +26,10 @@ class MainFoodsScreen extends StatelessWidget {
       value: serviceLocator<FoodListBloc>()..add(FoodListGetFoodsEvent()),
       child: const FoodListScreen(),
     ),
-    const Center(
-      child: Text("Second Page"),
+    BlocProvider.value(
+      value: serviceLocator<FavoriteFoodListBloc>()
+        ..add(FavoriteFoodListGetFoodsEvent()),
+      child: const FavoriteFoodListScreen(),
     )
   ];
 

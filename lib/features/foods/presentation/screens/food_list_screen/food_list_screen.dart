@@ -31,14 +31,15 @@ class FoodListScreen extends StatelessWidget {
                     context.read<FoodListBloc>().add(FoodListGetFoodsEvent()),
                 child: ListView.builder(
                     padding: const EdgeInsets.only(top: 24),
-                    shrinkWrap: true,
                     itemCount: state.foods.length,
                     itemBuilder: (context, index) {
                       final food = state.foods[index];
 
                       return Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(24),
                           onTap: () =>
                               context.goNamed("detail", extra: food.id),
                           child: _listItem(textTheme, food),
@@ -54,74 +55,82 @@ class FoodListScreen extends StatelessWidget {
   }
 
   Widget _listItem(TextTheme textTheme, FoodEntity food) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(24),
-          child: Hero(
-            tag: food.thumbnail ?? "",
-            child: CachedNetworkImage(
-              imageUrl: food.thumbnail ?? "",
-              width: 320,
-              height: 320,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              errorWidget: (context, url, error) => const Center(
-                child: Text(
-                  "No Image",
-                  style: TextStyle(
-                    color: Colors.white,
+    return Ink(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(24)),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+            child: Hero(
+              tag: food.thumbnail ?? "",
+              child: CachedNetworkImage(
+                imageUrl: food.thumbnail ?? "",
+                width: double.infinity,
+                height: 320,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                errorWidget: (context, url, error) => const Center(
+                  child: Text(
+                    "No Image",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      food.name ?? "",
-                      style: textTheme.titleMedium,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      food.category ?? "",
-                      style: textTheme.bodySmall,
-                    )
-                  ],
-                ),
-              ),
-              Flexible(
-                  flex: 1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.flag_outlined),
                       Text(
-                        food.area ?? '',
-                        style: textTheme.bodySmall,
-                      )
+                        food.name ?? "",
+                        style: textTheme.titleLarge,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        "${food.category} ${food.tags != null ? "#${food.tags}" : ""}",
+                        style: textTheme.bodyMedium,
+                      ),
                     ],
-                  ))
-            ],
-          ),
-        )
-      ],
+                  ),
+                ),
+                Flexible(
+                    flex: 2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Icon(
+                          Icons.flag_outlined,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          food.area ?? '',
+                          style: textTheme.bodyLarge,
+                        )
+                      ],
+                    ))
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

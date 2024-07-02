@@ -42,8 +42,8 @@ class FoodDetailScreen extends StatelessWidget {
             maxHeight: (size.height / 1.2),
             panel: _panel(textTheme, state.food),
             body: _body(size, state.food, state.isFavorite, () {
-              context.read<FoodDetailBloc>().add(
-                  FoodDetailFavoriteTappedEvent(isFavorite: !state.isFavorite));
+              context.read<FoodDetailBloc>().add(FoodDetailFavoriteTappedEvent(
+                  isFavorite: !state.isFavorite, food: state.food));
             }, () => context.pop()),
           ));
         }
@@ -73,33 +73,39 @@ class FoodDetailScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  flex: 2,
+                  flex: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         food.name ?? "",
-                        style: textTheme.titleLarge,
+                        style: textTheme.headlineMedium,
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
-                        food.category ?? "",
-                        style: textTheme.bodySmall,
+                        "${food.category} ${food.tags != null ? "#${food.tags}" : ""}",
+                        style: textTheme.bodyMedium,
                       )
                     ],
                   ),
                 ),
                 Flexible(
-                    flex: 1,
+                    flex: 2,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Icon(Icons.flag_outlined),
+                        const Icon(
+                          Icons.flag_outlined,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
                         Text(
                           food.area ?? '',
-                          style: textTheme.bodySmall,
+                          style: textTheme.bodyLarge,
                         )
                       ],
                     ))
@@ -139,10 +145,14 @@ class FoodDetailScreen extends StatelessWidget {
                   Expanded(
                       child: TabBarView(
                     children: [
-                      _ingredients(food),
-                      Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: Text(food.instructions ?? ""))
+                      _ingredients(textTheme, food),
+                      SingleChildScrollView(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Text(
+                          food.instructions ?? "",
+                          style: textTheme.bodyMedium,
+                        ),
+                      )
                     ],
                   ))
                 ],
@@ -164,6 +174,17 @@ class FoodDetailScreen extends StatelessWidget {
                   width: double.infinity,
                   height: (size.height / 2) + 50,
                   fit: BoxFit.cover,
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => const Center(
+                    child: Text(
+                      "No Image",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 )),
             Positioned(
                 top: 40,
@@ -207,16 +228,18 @@ class FoodDetailScreen extends StatelessWidget {
         ),
       );
 
-  Widget _ingredients(FoodEntity food) => ListView.separated(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      shrinkWrap: true,
-      itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            child:
-                Text("⚫️ ${food.measures![index]} ${food.ingredients![index]}"),
-          ),
-      separatorBuilder: (context, index) => Divider(
-            color: Colors.black.withOpacity(0.3),
-          ),
-      itemCount: food.ingredients!.length);
+  Widget _ingredients(TextTheme textTheme, FoodEntity food) =>
+      ListView.separated(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Text(
+                  "⚫️ ${food.measures![index]} ${food.ingredients![index]}",
+                  style: textTheme.bodyMedium,
+                ),
+              ),
+          separatorBuilder: (context, index) => Divider(
+                color: Colors.black.withOpacity(0.3),
+              ),
+          itemCount: food.ingredients!.length);
 }

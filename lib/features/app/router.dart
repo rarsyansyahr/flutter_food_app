@@ -11,13 +11,27 @@ import 'package:flutter_food_app/features/foods/presentation/screens/food_list_s
 class AppRouter {
   GoRouter generateRoutes() => GoRouter(routes: [
         GoRoute(
-          path: '/',
-          name: 'home',
-          builder: (context, state) => BlocProvider.value(
-            value: serviceLocator<MainFoodsBloc>(),
-            child: MainFoodsScreen(),
-          ),
-        ),
+            path: '/',
+            name: 'home',
+            builder: (context, state) => BlocProvider.value(
+                  value: serviceLocator<MainFoodsBloc>(),
+                  child: MainFoodsScreen(),
+                ),
+            routes: [
+              GoRoute(
+                path: 'detail',
+                name: 'detail',
+                builder: (context, state) {
+                  final String id = state.extra as String;
+
+                  return BlocProvider.value(
+                    value: serviceLocator<FoodDetailBloc>()
+                      ..add(FoodDetailGetFoodEvent(id)),
+                    child: const FoodDetailScreen(),
+                  );
+                },
+              )
+            ]),
         GoRoute(
           path: '/food-list',
           name: 'food_list',
@@ -26,18 +40,5 @@ class AppRouter {
             child: const FoodListScreen(),
           ),
         ),
-        GoRoute(
-          path: '/detail',
-          name: 'detail',
-          builder: (context, state) {
-            final String id = state.extra as String;
-
-            return BlocProvider.value(
-              value: serviceLocator<FoodDetailBloc>()
-                ..add(FoodDetailGetFoodEvent(id)),
-              child: const FoodDetailScreen(),
-            );
-          },
-        )
       ]);
 }

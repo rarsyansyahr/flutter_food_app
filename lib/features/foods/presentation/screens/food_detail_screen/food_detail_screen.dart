@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/features/foods/domain/entity/food_entity.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_detail_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class FoodDetailScreen extends StatelessWidget {
@@ -23,8 +24,11 @@ class FoodDetailScreen extends StatelessWidget {
         }
 
         if (state is FoodDetailGetFoodErrorState) {
-          return Center(
-              child: Text(state.message, textAlign: TextAlign.center));
+          return Scaffold(
+              appBar: AppBar(),
+              body: Center(
+                child: Text(state.message, textAlign: TextAlign.center),
+              ));
         }
 
         if (state is FoodDetailGetFoodSuccessState) {
@@ -40,7 +44,7 @@ class FoodDetailScreen extends StatelessWidget {
             body: _body(size, state.food, state.isFavorite, () {
               context.read<FoodDetailBloc>().add(
                   FoodDetailFavoriteTappedEvent(isFavorite: !state.isFavorite));
-            }),
+            }, () => context.pop()),
           ));
         }
 
@@ -148,7 +152,8 @@ class FoodDetailScreen extends StatelessWidget {
         ),
       );
 
-  Widget _body(Size size, FoodEntity food, bool isFavorite, onFavoriteTap) =>
+  Widget _body(Size size, FoodEntity food, bool isFavorite, onFavoriteTap,
+          onBackTap) =>
       SingleChildScrollView(
         child: Stack(
           children: [
@@ -164,12 +169,19 @@ class FoodDetailScreen extends StatelessWidget {
                 top: 40,
                 left: 20,
                 child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                    size: 38,
-                  ),
-                  onPressed: () {},
+                  icon: Icon(Icons.arrow_back,
+                      color: Colors.white,
+                      size: 38,
+                      shadows: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset:
+                              const Offset(2, 1), // changes position of shadow
+                        ),
+                      ]),
+                  onPressed: () => onBackTap(),
                 )),
             Positioned(
                 top: 40,
@@ -179,6 +191,15 @@ class FoodDetailScreen extends StatelessWidget {
                     isFavorite ? Icons.favorite : Icons.favorite_outline,
                     color: isFavorite ? Colors.red : Colors.white,
                     size: 38,
+                    shadows: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset:
+                            const Offset(2, 1), // changes position of shadow
+                      ),
+                    ],
                   ),
                   onPressed: () => onFavoriteTap(),
                 ))

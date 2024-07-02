@@ -26,12 +26,3 @@ class FoodDetailGetFoodErrorState extends FoodDetailState {
   @override
   List<Object> get props => [message];
 }
-
-// class FoodDetailFavoriteState extends FoodDetailState {
-//   final bool isFavorite;
-
-//   FoodDetailFavoriteState(this.isFavorite);
-
-//   @override
-//   List<Object> get props => [isFavorite];
-// }

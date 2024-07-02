@@ -26,20 +26,26 @@ class FoodListScreen extends StatelessWidget {
 
           if (state is FoodListGetFoodsSuccessState) {
             return Scaffold(
-              body: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: state.foods.length,
-                  itemBuilder: (context, index) {
-                    final food = state.foods[index];
+              body: RefreshIndicator(
+                onRefresh: () async =>
+                    context.read<FoodListBloc>().add(FoodListGetFoodsEvent()),
+                child: ListView.builder(
+                    padding: const EdgeInsets.only(top: 24),
+                    shrinkWrap: true,
+                    itemCount: state.foods.length,
+                    itemBuilder: (context, index) {
+                      final food = state.foods[index];
 
-                    return Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: InkWell(
-                        onTap: () => context.goNamed("detail", extra: food.id),
-                        child: _listItem(textTheme, food),
-                      ),
-                    );
-                  }),
+                      return Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: InkWell(
+                          onTap: () =>
+                              context.goNamed("detail", extra: food.id),
+                          child: _listItem(textTheme, food),
+                        ),
+                      );
+                    }),
+              ),
             );
           }
 

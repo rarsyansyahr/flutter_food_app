@@ -31,9 +31,9 @@ class MainFoodsScreen extends StatelessWidget {
 
   final List<BottomMenuItem> _menus = [
     BottomMenuItem(
-        title: "Home",
-        activeIcon: Icons.home,
-        inactiveIcon: Icons.home_outlined),
+        title: "Foods",
+        activeIcon: Icons.fastfood,
+        inactiveIcon: Icons.fastfood_outlined),
     BottomMenuItem(
         title: "Favorite",
         activeIcon: Icons.favorite,

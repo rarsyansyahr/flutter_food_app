@@ -19,6 +19,7 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
       FoodDetailFavoriteTappedEvent event, Emitter<FoodDetailState> emit) {
     if (state is FoodDetailGetFoodSuccessState) {
       final currentState = state as FoodDetailGetFoodSuccessState;
+
       emit(FoodDetailGetFoodSuccessState(
           food: currentState.food, isFavorite: event.isFavorite));
     }
@@ -27,7 +28,7 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
   FutureOr<void> foodDetailGetFoodEvent(
       FoodDetailGetFoodEvent event, Emitter<FoodDetailState> emit) async {
     try {
-      emit(FoodDetailInitialState());
+      emit(FoodDetailLoadingState());
       FoodEntity food =
           await serviceLocator<GetFoodDetailUseCase>().call(event.id);
       emit(FoodDetailGetFoodSuccessState(food: food, isFavorite: false));

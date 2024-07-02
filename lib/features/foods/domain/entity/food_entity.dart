@@ -14,10 +14,21 @@ class FoodEntity with _$FoodEntity {
       @JsonKey(name: 'strArea') String? area,
       @JsonKey(name: 'strInstructions') String? instructions,
       @JsonKey(name: 'strMealThumb') String? thumbnail,
-      @JsonKey(name: 'strTags') String? tag,
+      @JsonKey(name: '') String? tag,
       List<String>? ingredients,
       List<String>? measures}) = _FoodEntity;
 
   factory FoodEntity.fromJson(Map<String, Object?> json) =>
       _$FoodEntityFromJson(json);
+
+  factory FoodEntity.fromMap(Map<String, Object?> map) => FoodEntity(
+      id: map['idMeal'] as String?,
+      name: map['strMeal'] as String?,
+      category: map['strCategory'] as String?,
+      area: map['strArea'] as String?,
+      instructions: map['strInstructions'] as String?,
+      thumbnail: map['strMealThumb'] as String?,
+      tag: map['strTags'] as String?,
+      ingredients: (map['ingredients'] as String?)?.split(',').toList(),
+      measures: (map['measures'] as String?)?.split(',').toList());
 }

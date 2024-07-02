@@ -28,26 +28,30 @@ class MainFoodsScreen extends StatelessWidget {
                 body: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     itemCount: state.foods.length,
-                    itemBuilder: (context, index) => ListTile(
-                          leading: CachedNetworkImage(
-                            imageUrl: state.foods[index].thumbnail ?? "",
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            errorWidget: (context, url, error) => const Center(
-                              child: Text(
-                                "No Image",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
+                    itemBuilder: (context, index) {
+                      final food = state.foods[index];
+
+                      return ListTile(
+                        leading: CachedNetworkImage(
+                          imageUrl: food.thumbnail ?? "",
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) => const Center(
+                            child: Text(
+                              "No Image",
+                              style: TextStyle(
+                                color: Colors.white,
                               ),
                             ),
                           ),
-                          title: Text(state.foods[index].name ?? "-"),
-                        )));
+                        ),
+                        title: Text("${food.name} - ${food.category}"),
+                      );
+                    }));
           }
 
           return const SizedBox();

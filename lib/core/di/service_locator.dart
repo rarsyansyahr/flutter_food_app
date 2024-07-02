@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_food_app/core/utils/split_food_fields_util.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_food_app/core/network/network_client.dart';
 import 'package:flutter_food_app/core/shared/constants.dart';
@@ -12,13 +13,15 @@ final serviceLocator = GetIt.instance;
 
 setupServiceLocator() async {
   serviceLocator.registerFactory<Constant>(() => Constant());
+  serviceLocator
+      .registerFactory<SplitFoodFieldsUtil>(() => SplitFoodFieldsUtil());
   serviceLocator.registerFactory<Dio>(
       () => NetworkClient(Dio(), constant: serviceLocator()).dio);
 
   // * Foods
   serviceLocator.registerFactory<MainFoodsBloc>(() => MainFoodsBloc());
-  serviceLocator
-      .registerLazySingleton<FoodApi>(() => FoodApi(dio: serviceLocator()));
+  serviceLocator.registerLazySingleton<FoodApi>(() =>
+      FoodApi(dio: serviceLocator(), splitFoodFieldsUtil: serviceLocator()));
   serviceLocator.registerLazySingleton<FoodRepository>(
       () => FoodRepositoryImpl(foodApi: serviceLocator()));
   serviceLocator.registerLazySingleton<GetFoodsUseCase>(

@@ -24,7 +24,9 @@ class FoodDetailScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is FoodDetailLoadingState) {
-          return const Center(child: CircularProgressIndicator());
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
 
         if (state is FoodDetailGetFoodErrorState) {
@@ -34,9 +36,12 @@ class FoodDetailScreen extends StatelessWidget {
 
         if (state is FoodDetailGetFoodSuccessState) {
           return Scaffold(
+              appBar: AppBar(
+                title: Text(state.food.name ?? "-"),
+              ),
               body: ListView(
-            children: [Text(state.food.toString())],
-          ));
+                children: [Text(state.food.toString())],
+              ));
         }
 
         return const SizedBox();

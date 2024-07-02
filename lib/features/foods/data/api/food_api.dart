@@ -9,15 +9,22 @@ class FoodApi {
   FoodApi({required this.dio, required this.splitFoodFieldsUtil});
 
   Future<List<FoodEntity>> getFoods() async {
-    final response = await dio.get("/search.php?s=");
+    try {
+      final response = await dio.get("/search.php?s=");
 
-    return List<Map<String, dynamic>>.from(response.data['meals']).map((item) {
-      item['ingredients'] =
-          splitFoodFieldsUtil.splitFields(item, "strIngredient");
-      item['measures'] = splitFoodFieldsUtil.splitFields(item, "strMeasure");
+      return List<Map<String, dynamic>>.from(response.data['meals'])
+          .map((item) {
+        item['ingredients'] =
+            splitFoodFieldsUtil.splitFields(item, "strIngredient");
+        item['measures'] = splitFoodFieldsUtil.splitFields(item, "strMeasure");
 
-      return FoodEntity.fromJson(item);
-    }).toList();
+        return FoodEntity.fromJson(item);
+      }).toList();
+    } catch (e) {
+      // print(e);
+
+      return [];
+    }
   }
 
   Future<FoodEntity> getFood(String id) async {

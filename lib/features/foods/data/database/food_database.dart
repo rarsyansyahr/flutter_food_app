@@ -40,11 +40,13 @@ class FoodDatabaseProvider {
           food.ingredients?.where((item) => item.trim().isNotEmpty).join(",");
       json['measures'] =
           food.measures?.where((item) => item.trim().isNotEmpty).join(",");
+      json['strTags'] =
+          food.tags?.where((item) => item.trim().isNotEmpty).join(",");
 
       return await db.insert(tableName, json,
           conflictAlgorithm: ConflictAlgorithm.replace);
     } catch (e) {
-      print(e);
+      // print(e);
 
       return 0;
     }
@@ -61,7 +63,7 @@ class FoodDatabaseProvider {
 
       return [];
     } catch (e) {
-      print(e);
+      // print(e);
       return [];
     }
   }

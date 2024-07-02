@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/core/di/service_locator.dart';
 import 'package:flutter_food_app/core/utils/tagify.dart';
 import 'package:flutter_food_app/features/foods/domain/entity/food_entity.dart';
-import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_detail_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/bloc/favorite_food_detail_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class FoodDetailScreen extends StatelessWidget {
-  const FoodDetailScreen({super.key});
+class FavoriteFoodDetailScreen extends StatelessWidget {
+  const FavoriteFoodDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,45 +18,41 @@ class FoodDetailScreen extends StatelessWidget {
 
     void onBackTap() => context.pop();
 
-    void onFavoriteTap(bool isFavorite, FoodEntity food) => context
-        .read<FoodDetailBloc>()
-        .add(FoodDetailFavoriteTappedEvent(isFavorite: isFavorite, food: food));
-
-    return BlocConsumer<FoodDetailBloc, FoodDetailState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        if (state is FoodDetailLoadingState) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        if (state is FoodDetailGetFoodErrorState) {
-          return Scaffold(
-              appBar: AppBar(),
+    return BlocConsumer<FavoriteFoodDetailBloc, FavoriteFoodDetailState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is FavoriteFoodDetailLoadingState) {
+            return const Scaffold(
               body: Center(
-                child: Text(state.message, textAlign: TextAlign.center),
-              ));
-        }
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
 
-        if (state is FoodDetailGetFoodSuccessState) {
-          return Scaffold(
-              body: SlidingUpPanel(
-            parallaxEnabled: true,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            minHeight: (size.height / 2),
-            maxHeight: (size.height / 1.2),
-            panel: _panel(textTheme, state.food),
-            body: _body(size, state.food, state.isFavorite,
-                () => onFavoriteTap(!state.isFavorite, state.food), onBackTap),
-          ));
-        }
+          if (state is FavoriteFoodDetailGetFoodErrorState) {
+            return const Scaffold(
+              body: Center(
+                child: Text("Error get food"),
+              ),
+            );
+          }
 
-        return const SizedBox();
-      },
-    );
+          if (state is FavoriteFoodDetailGetFoodSuccessState) {
+            return Scaffold(
+                body: SlidingUpPanel(
+              parallaxEnabled: true,
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              minHeight: size.height / 2,
+              maxHeight: size.height / 1.2,
+              panel: _panel(textTheme, state.food),
+              body: _body(size, state.food, onBackTap),
+            ));
+          }
+
+          return const SizedBox();
+        });
   }
 
   Widget _panel(TextTheme textTheme, FoodEntity food) => Padding(
@@ -179,30 +175,26 @@ class FoodDetailScreen extends StatelessWidget {
         ),
       );
 
-  Widget _body(Size size, FoodEntity food, bool isFavorite, onFavoriteTap,
-          onBackTap) =>
-      SingleChildScrollView(
+  Widget _body(Size size, FoodEntity food, onBackTap) => SingleChildScrollView(
         child: Stack(
           children: [
-            Hero(
-                tag: food.thumbnail ?? "",
-                child: CachedNetworkImage(
-                  imageUrl: food.thumbnail ?? "",
-                  width: double.infinity,
-                  height: (size.height / 2) + 50,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
+            CachedNetworkImage(
+              imageUrl: food.thumbnail ?? "",
+              width: double.infinity,
+              height: (size.height / 2) + 50,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              errorWidget: (context, url, error) => const Center(
+                child: Text(
+                  "No Image",
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
-                  errorWidget: (context, url, error) => const Center(
-                    child: Text(
-                      "No Image",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                )),
+                ),
+              ),
+            ),
             Positioned(
                 top: 40,
                 left: 20,
@@ -221,26 +213,6 @@ class FoodDetailScreen extends StatelessWidget {
                       ]),
                   onPressed: () => onBackTap(),
                 )),
-            Positioned(
-                top: 40,
-                right: 20,
-                child: IconButton(
-                  icon: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_outline,
-                    color: isFavorite ? Colors.red : Colors.white,
-                    size: 38,
-                    shadows: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset:
-                            const Offset(2, 1), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  onPressed: () => onFavoriteTap(),
-                ))
           ],
         ),
       );

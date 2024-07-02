@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/favorite_food_detail_screen/favorite_food_detail_screen.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/bloc/favorite_food_detail_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_detail_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/main_foods_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/food_detail_screen/food_detail_screen.dart';
@@ -28,6 +30,19 @@ class AppRouter {
                     value: serviceLocator<FoodDetailBloc>()
                       ..add(FoodDetailGetFoodEvent(id)),
                     child: const FoodDetailScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                path: 'favorite_detail',
+                name: 'favorite_detail',
+                builder: (context, state) {
+                  final String id = state.extra as String;
+
+                  return BlocProvider.value(
+                    value: serviceLocator<FavoriteFoodDetailBloc>()
+                      ..add(FavoriteFoodDetailGetFoodEvent(id)),
+                    child: const FavoriteFoodDetailScreen(),
                   );
                 },
               )

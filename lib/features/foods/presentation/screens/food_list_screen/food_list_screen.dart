@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_food_app/core/di/service_locator.dart';
+import 'package:flutter_food_app/core/utils/tagify.dart';
 import 'package:flutter_food_app/features/foods/domain/entity/food_entity.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_list_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -30,6 +32,7 @@ class FoodListScreen extends StatelessWidget {
                 onRefresh: () async =>
                     context.read<FoodListBloc>().add(FoodListGetFoodsEvent()),
                 child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.only(top: 24),
                     itemCount: state.foods.length,
                     itemBuilder: (context, index) {
@@ -42,7 +45,7 @@ class FoodListScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(24),
                           onTap: () =>
                               context.goNamed("detail", extra: food.id),
-                          child: _listItem(textTheme, food),
+                          child: FoodListItem(textTheme: textTheme, food: food),
                         ),
                       );
                     }),
@@ -53,8 +56,20 @@ class FoodListScreen extends StatelessWidget {
           return const SizedBox();
         });
   }
+}
 
-  Widget _listItem(TextTheme textTheme, FoodEntity food) {
+class FoodListItem extends StatelessWidget {
+  const FoodListItem({
+    super.key,
+    required this.textTheme,
+    required this.food,
+  });
+
+  final TextTheme textTheme;
+  final FoodEntity food;
+
+  @override
+  Widget build(BuildContext context) {
     return Ink(
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(24)),
@@ -63,22 +78,19 @@ class FoodListScreen extends StatelessWidget {
           ClipRRect(
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-            child: Hero(
-              tag: food.thumbnail ?? "",
-              child: CachedNetworkImage(
-                imageUrl: food.thumbnail ?? "",
-                width: double.infinity,
-                height: 320,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                errorWidget: (context, url, error) => const Center(
-                  child: Text(
-                    "No Image",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+            child: CachedNetworkImage(
+              imageUrl: food.thumbnail ?? "",
+              width: double.infinity,
+              height: 320,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              errorWidget: (context, url, error) => const Center(
+                child: Text(
+                  "No Image",
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -96,13 +108,15 @@ class FoodListScreen extends StatelessWidget {
                     children: [
                       Text(
                         food.name ?? "",
-                        style: textTheme.titleLarge,
+                        style: TextStyle(
+                            fontSize: textTheme.titleLarge!.fontSize,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
-                        height: 8,
+                        height: 10,
                       ),
                       Text(
-                        "${food.category} ${food.tags != null ? "#${food.tags}" : ""}",
+                        "${food.category} ${serviceLocator<Tagify>().createTags(values: food.tags ?? [], max: 1)}",
                         style: textTheme.bodyMedium,
                       ),
                     ],

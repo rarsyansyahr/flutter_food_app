@@ -4,7 +4,7 @@ import 'package:flutter_food_app/core/di/service_locator.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/favorite_food_list_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_list_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/main_foods_bloc.dart';
-import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_list/favorite_food_list.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_list_screen/favorite_food_list_screen.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/food_list_screen.dart';
 
 class BottomMenuItem {
@@ -52,7 +52,7 @@ class MainFoodsScreen extends StatelessWidget {
         body: _pages[state.selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: state.selectedIndex,
-          selectedItemColor: Colors.blue,
+          selectedItemColor: const Color.fromARGB(255, 222, 90, 42),
           onTap: (index) => context
               .read<MainFoodsBloc>()
               .add(MainFoodsPageTappedEvent(index: index)),

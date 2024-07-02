@@ -6,3 +6,12 @@ class FavoriteFoodListEvent extends Equatable {
 }
 
 class FavoriteFoodListGetFoodsEvent extends FavoriteFoodListEvent {}
+
+class FavoriteFoodListRemoveFoodEvent extends FavoriteFoodListEvent {
+  final String id;
+
+  FavoriteFoodListRemoveFoodEvent(this.id);
+
+  @override
+  List<Object?> get props => [id];
+}

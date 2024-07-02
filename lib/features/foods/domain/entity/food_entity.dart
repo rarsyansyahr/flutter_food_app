@@ -14,7 +14,9 @@ class FoodEntity with _$FoodEntity {
       @JsonKey(name: 'strArea') String? area,
       @JsonKey(name: 'strInstructions') String? instructions,
       @JsonKey(name: 'strMealThumb') String? thumbnail,
-      @JsonKey(name: 'strTags') String? tags,
+      @JsonKey(name: 'strTags', fromJson: _stringToList)
+      @Default([])
+      List<String>? tags,
       List<String>? ingredients,
       List<String>? measures}) = _FoodEntity;
 
@@ -28,7 +30,15 @@ class FoodEntity with _$FoodEntity {
       area: map['strArea'] as String?,
       instructions: map['strInstructions'] as String?,
       thumbnail: map['strMealThumb'] as String?,
-      tags: map['strTags'] as String?,
+      tags: (map['strTags'] as String?)?.split(',').toList(),
       ingredients: (map['ingredients'] as String?)?.split(',').toList(),
       measures: (map['measures'] as String?)?.split(',').toList());
+}
+
+List<String> _stringToList(String? value) {
+  if (value == null || value == "") {
+    return [];
+  }
+
+  return value.split(",").map((item) => item.trim()).toList();
 }

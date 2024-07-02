@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_food_app/core/utils/split_food_fields_util.dart';
+import 'package:flutter_food_app/features/foods/domain/usecase/get_food_detail_usecase.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_detail_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_food_app/core/network/network_client.dart';
 import 'package:flutter_food_app/core/shared/constants.dart';
@@ -18,12 +20,18 @@ setupServiceLocator() async {
   serviceLocator.registerFactory<Dio>(
       () => NetworkClient(Dio(), constant: serviceLocator()).dio);
 
-  // * Foods
-  serviceLocator.registerFactory<MainFoodsBloc>(() => MainFoodsBloc());
+  // * Main Foods
   serviceLocator.registerLazySingleton<FoodApi>(() =>
       FoodApi(dio: serviceLocator(), splitFoodFieldsUtil: serviceLocator()));
   serviceLocator.registerLazySingleton<FoodRepository>(
       () => FoodRepositoryImpl(foodApi: serviceLocator()));
+
+  serviceLocator.registerFactory<MainFoodsBloc>(() => MainFoodsBloc());
   serviceLocator.registerLazySingleton<GetFoodsUseCase>(
       () => GetFoodsUseCase(serviceLocator()));
+
+  // * Food Detail
+  serviceLocator.registerFactory<FoodDetailBloc>(() => FoodDetailBloc());
+  serviceLocator.registerLazySingleton<GetFoodDetailUseCase>(
+      () => GetFoodDetailUseCase(serviceLocator()));
 }

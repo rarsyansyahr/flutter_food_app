@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/main_foods_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class MainFoodsScreen extends StatelessWidget {
   const MainFoodsScreen({super.key});
@@ -50,6 +51,7 @@ class MainFoodsScreen extends StatelessWidget {
                           ),
                         ),
                         title: Text("${food.name} - ${food.category}"),
+                        onTap: () => context.goNamed("detail", extra: food.id),
                       );
                     }));
           }

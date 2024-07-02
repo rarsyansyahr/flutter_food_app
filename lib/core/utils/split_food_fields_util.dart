@@ -1,15 +1,15 @@
 class SplitFoodFieldsUtil {
   List<String> splitFields(Map<String, dynamic> food, String key) {
-    List<String> ingredients = [];
+    List<String> fields = [];
 
     for (int i = 1; i <= 20; i++) {
-      String? ingredient = food['$key$i'];
+      String? field = food['$key$i'];
 
-      if (ingredient != null && ingredient.isNotEmpty) {
-        ingredients.add(ingredient);
+      if (field != null && field.isNotEmpty) {
+        fields.add(field);
       }
     }
 
-    return ingredients;
+    return fields;
   }
 }

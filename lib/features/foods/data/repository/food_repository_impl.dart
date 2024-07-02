@@ -9,4 +9,7 @@ class FoodRepositoryImpl implements FoodRepository {
 
   @override
   Future<List<FoodEntity>> getFoods() => foodApi.getFoods();
+
+  @override
+  Future<FoodEntity> getFood(String id) => foodApi.getFood(id);
 }

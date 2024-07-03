@@ -11,10 +11,12 @@ class FoodListLoadingState extends FoodListState {}
 
 class FoodListGetFoodsSuccessState extends FoodListState {
   final List<FoodEntity> foods;
-  FoodListGetFoodsSuccessState(this.foods);
+  final List<FoodEntity> favoriteFoods;
+  FoodListGetFoodsSuccessState(
+      {required this.foods, required this.favoriteFoods});
 
   @override
-  List<Object> get props => [foods];
+  List<Object> get props => [foods, favoriteFoods];
 }
 
 class FoodListGetFoodsErrorState extends FoodListState {

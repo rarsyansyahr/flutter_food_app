@@ -25,7 +25,7 @@ class FoodRepositoryImpl implements FoodRepository {
       foodDatabaseProvider.getFood(id);
 
   @override
-  Future<int> createFavoriteFood(bool isFavorite, FoodEntity food) =>
+  Future<int> createFavoriteFood(FoodEntity food) =>
       foodDatabaseProvider.createFood(food);
 
   @override

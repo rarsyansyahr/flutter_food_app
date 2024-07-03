@@ -9,7 +9,7 @@ abstract class FoodRepository {
 
   Future<FoodEntity?> getFavoriteFood(String id);
 
-  Future<int> createFavoriteFood(bool isFavorite, FoodEntity food);
+  Future<int> createFavoriteFood(FoodEntity food);
 
   Future<int> removeFavoriteFood(String id);
 }

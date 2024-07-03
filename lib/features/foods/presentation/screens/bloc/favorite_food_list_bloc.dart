@@ -14,6 +14,7 @@ class FavoriteFoodListBloc
     extends Bloc<FavoriteFoodListEvent, FavoriteFoodListState> {
   FavoriteFoodListBloc() : super(FavoriteFoodListInitialState()) {
     on<FavoriteFoodListGetFoodsEvent>(favoriteFoodListGetFoodsEvent);
+
     on<FavoriteFoodListRemoveFoodEvent>(favoriteFoodListRemoveFoodEvent);
   }
 

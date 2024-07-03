@@ -6,6 +6,6 @@ class AddFavoriteFoodUsecase {
 
   AddFavoriteFoodUsecase(this.foodRepositoryImpl);
 
-  Future<int> call(bool isFavorite, FoodEntity food) async =>
-      foodRepositoryImpl.createFavoriteFood(isFavorite, food);
+  Future<int> call(FoodEntity food) async =>
+      foodRepositoryImpl.createFavoriteFood(food);
 }

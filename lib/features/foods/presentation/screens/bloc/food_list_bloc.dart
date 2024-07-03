@@ -19,7 +19,7 @@ class FoodListBloc extends Bloc<FoodListEvent, FoodListState> {
     try {
       emit(FoodListLoadingState());
       List<FoodEntity> foods = await serviceLocator<GetFoodsUseCase>().call();
-      emit(FoodListGetFoodsSuccessState(foods));
+      emit(FoodListGetFoodsSuccessState(foods: foods, favoriteFoods: foods));
     } catch (e) {
       emit(FoodListGetFoodsErrorState("Error get foods"));
     }

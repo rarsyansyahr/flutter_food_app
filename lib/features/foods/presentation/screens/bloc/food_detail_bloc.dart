@@ -15,6 +15,7 @@ part 'food_detail_event.dart';
 class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
   FoodDetailBloc() : super(FoodDetailInitialState()) {
     on<FoodDetailGetFoodEvent>(foodDetailGetFoodEvent);
+
     on<FoodDetailFavoriteTappedEvent>(foodDetailFavoriteTappedEvent);
   }
 
@@ -22,8 +23,7 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
       Emitter<FoodDetailState> emit) async {
     try {
       if (event.isFavorite) {
-        await serviceLocator<AddFavoriteFoodUsecase>()
-            .call(event.isFavorite, event.food);
+        await serviceLocator<AddFavoriteFoodUsecase>().call(event.food);
       } else {
         await serviceLocator<RemoveFavoriteFoodUsecase>()
             .call(event.food.id ?? "");

@@ -1,7 +1,6 @@
 // ignore_for_file: void_checks
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_list_screen/bloc/favorite_food_list_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/widgets/error_view.dart';

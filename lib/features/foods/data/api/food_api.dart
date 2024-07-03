@@ -13,12 +13,13 @@ class FoodApi {
       final response = await dio.get("/search.php?s=");
 
       return List<Map<String, dynamic>>.from(response.data['meals'])
-          .map((item) {
-        item['ingredients'] =
-            splitFoodFieldsUtil.splitFields(item, "strIngredient");
-        item['measures'] = splitFoodFieldsUtil.splitFields(item, "strMeasure");
+          .map((food) {
+        food['ingredients'] =
+            splitFoodFieldsUtil.splitFields(food, "strIngredient");
+        food['measures'] = splitFoodFieldsUtil.splitFields(food, "strMeasure");
+        food['strTags'] = _stringToList(food['strTags']);
 
-        return FoodEntity.fromJson(item);
+        return FoodEntity.fromJson(food);
       }).toList();
     } catch (e) {
       // print(e);
@@ -34,7 +35,16 @@ class FoodApi {
     food['ingredients'] =
         splitFoodFieldsUtil.splitFields(food, "strIngredient");
     food['measures'] = splitFoodFieldsUtil.splitFields(food, "strMeasure");
+    food['strTags'] = _stringToList(food['strTags']);
 
     return FoodEntity.fromJson(food);
+  }
+
+  List<String> _stringToList(String? value) {
+    if (value == null || value == "") {
+      return [];
+    }
+
+    return value.split(",").map((item) => item.trim()).toList();
   }
 }

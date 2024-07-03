@@ -4,7 +4,7 @@ class Tagify {
       final List<String> tags = values.map((value) => value.trim()).toList();
 
       if (max != null) {
-        tags.sublist(0, max);
+        return "#${tags.sublist(0, max).join(" #")}";
       }
 
       return "#${tags.join(" #")}";

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_app/features/foods/presentation/screens/bloc/favorite_food_detail_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_detail_screen/bloc/favorite_food_detail_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_detail_screen/widgets/favorite_food_body_view.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_detail_screen/widgets/favorite_food_panel_view.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/widgets/error_view.dart';

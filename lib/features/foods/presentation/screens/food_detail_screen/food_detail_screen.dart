@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/features/foods/domain/entity/food_entity.dart';
-import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_detail_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/food_detail_screen/bloc/food_detail_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/widgets/error_view.dart';
 import 'package:flutter_food_app/features/foods/presentation/widgets/loading_view.dart';
 
@@ -17,9 +17,19 @@ class FoodDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    void onFavoriteTap(bool isFavorite, FoodEntity food) => context
-        .read<FoodDetailBloc>()
-        .add(FoodDetailFavoriteTappedEvent(isFavorite: isFavorite, food: food));
+    void onFavoriteTap(bool isFavorite, FoodEntity food) {
+      context.read<FoodDetailBloc>().add(
+          FoodDetailFavoriteTappedEvent(isFavorite: isFavorite, food: food));
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          isFavorite ? "Add to favorite" : "Remove from favorite",
+          style: const TextStyle(color: Colors.white),
+        ),
+        duration: const Duration(seconds: 1),
+        backgroundColor: Colors.amber[800],
+      ));
+    }
 
     return BlocConsumer<FoodDetailBloc, FoodDetailState>(
       listener: (context, state) {},

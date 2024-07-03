@@ -6,8 +6,11 @@ part 'main_foods_state.dart';
 
 class MainFoodsBloc extends Bloc<MainFoodsEvent, MainFoodsState> {
   MainFoodsBloc() : super(const MainFoodsState(selectedIndex: 0)) {
-    on<MainFoodsPageTappedEvent>((event, emit) {
-      emit(MainFoodsState(selectedIndex: event.index));
-    });
+    on<MainFoodsPageTappedEvent>(mainFoodsPageTappedEvent);
+  }
+
+  void mainFoodsPageTappedEvent(
+      MainFoodsPageTappedEvent event, Emitter<MainFoodsState> emit) {
+    emit(MainFoodsState(selectedIndex: event.index));
   }
 }

@@ -23,7 +23,7 @@ class FavoriteFoodDetailBloc
       FoodEntity? food =
           await serviceLocator<GetFavoriteFoodDetailUsage>().call(event.id);
       emit(FavoriteFoodDetailGetFoodSuccessState(food: food));
-    } catch (e, s) {
+    } catch (e) {
       emit(FavoriteFoodDetailGetFoodErrorState("Error get food"));
     }
   }

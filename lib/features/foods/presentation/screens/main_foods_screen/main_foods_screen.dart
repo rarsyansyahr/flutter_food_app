@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/core/di/service_locator.dart';
-import 'package:flutter_food_app/features/foods/presentation/screens/bloc/favorite_food_list_bloc.dart';
-import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_list_bloc.dart';
-import 'package:flutter_food_app/features/foods/presentation/screens/bloc/main_foods_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_list_screen/bloc/favorite_food_list_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/bloc/food_list_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/main_foods_screen/bloc/main_foods_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_list_screen/favorite_food_list_screen.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/food_list_screen.dart';
 // import 'package:flutter_splash_screen/flutter_splash_screen.dart';

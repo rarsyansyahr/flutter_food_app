@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_app/features/foods/presentation/favorite_food_detail_screen/favorite_food_detail_screen.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_detail_screen/favorite_food_detail_screen.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/favorite_food_detail_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_detail_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/main_foods_bloc.dart';

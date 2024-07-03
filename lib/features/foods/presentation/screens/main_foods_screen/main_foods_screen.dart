@@ -6,6 +6,7 @@ import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_l
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/main_foods_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_list_screen/favorite_food_list_screen.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/food_list_screen.dart';
+// import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 
 class BottomMenuItem {
   final String title;
@@ -46,6 +47,8 @@ class MainFoodsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Future.delayed(const Duration(seconds: 1), );
+
     return BlocConsumer<MainFoodsBloc, MainFoodsState>(
       listener: (context, state) {},
       builder: (context, state) => Scaffold(

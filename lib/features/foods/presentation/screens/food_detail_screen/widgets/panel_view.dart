@@ -112,6 +112,7 @@ class PanelView extends StatelessWidget {
                       fontSize: 12, fontWeight: FontWeight.w600),
                   labelPadding: const EdgeInsets.symmetric(horizontal: 32),
                   dividerColor: Colors.transparent,
+                  indicatorColor: Colors.amber[800],
                 ),
                 Divider(
                   color: Colors.black.withOpacity(0.3),

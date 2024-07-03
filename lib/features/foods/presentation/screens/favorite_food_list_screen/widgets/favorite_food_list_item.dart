@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food_app/core/di/service_locator.dart';
@@ -14,7 +16,7 @@ class FavoriteFoodListItem extends StatelessWidget {
 
   final FoodEntity food;
   final TextTheme textTheme;
-  final void onRemoveFavorite;
+  final onRemoveFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class FavoriteFoodListItem extends StatelessWidget {
       child: Dismissible(
         direction: DismissDirection.endToStart,
         key: Key(food.id ?? ""),
-        onDismissed: (direction) async => onRemoveFavorite,
+        onDismissed: (direction) async => onRemoveFavorite(),
         background: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(

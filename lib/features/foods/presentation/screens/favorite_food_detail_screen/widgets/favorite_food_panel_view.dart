@@ -7,10 +7,10 @@ import 'package:flutter_food_app/features/foods/presentation/screens/favorite_fo
 class FavoriteFoodPanelView extends StatelessWidget {
   const FavoriteFoodPanelView({
     super.key,
-    required this.food,
+    this.food,
   });
 
-  final FoodEntity food;
+  final FoodEntity? food;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class FavoriteFoodPanelView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      food.name ?? "",
+                      food?.name ?? "",
                       style: TextStyle(
                           fontSize: textTheme.headlineMedium!.fontSize,
                           fontWeight: FontWeight.bold),
@@ -50,7 +50,7 @@ class FavoriteFoodPanelView extends StatelessWidget {
                       height: 12,
                     ),
                     Text(
-                      food.category ?? "",
+                      food?.category ?? "",
                       style: textTheme.bodyLarge,
                     ),
                     const SizedBox(
@@ -58,7 +58,7 @@ class FavoriteFoodPanelView extends StatelessWidget {
                     ),
                     Text(
                       serviceLocator<Tagify>()
-                          .createTags(values: food.tags ?? []),
+                          .createTags(values: food?.tags ?? []),
                       style: textTheme.bodySmall,
                     )
                   ],
@@ -77,7 +77,7 @@ class FavoriteFoodPanelView extends StatelessWidget {
                         width: 4,
                       ),
                       Text(
-                        food.area ?? '',
+                        food?.area ?? '',
                         style: textTheme.bodyLarge,
                       )
                     ],
@@ -123,7 +123,7 @@ class FavoriteFoodPanelView extends StatelessWidget {
                       physics: const BouncingScrollPhysics(),
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Text(
-                        food.instructions ?? "",
+                        food?.instructions ?? "",
                         style: textTheme.bodyMedium,
                       ),
                     )

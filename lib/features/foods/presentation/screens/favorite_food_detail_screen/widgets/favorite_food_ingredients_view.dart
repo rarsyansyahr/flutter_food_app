@@ -4,10 +4,10 @@ import 'package:flutter_food_app/features/foods/domain/entity/food_entity.dart';
 class FavoriteFoodIngredientsView extends StatelessWidget {
   const FavoriteFoodIngredientsView({
     super.key,
-    required this.food,
+    this.food,
   });
 
-  final FoodEntity food;
+  final FoodEntity? food;
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,13 @@ class FavoriteFoodIngredientsView extends StatelessWidget {
         itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),
               child: Text(
-                "⚫️ ${food.measures![index]} ${food.ingredients![index]}",
+                "⚫️ ${food?.measures![index]} ${food?.ingredients![index]}",
                 style: textTheme.bodyMedium,
               ),
             ),
         separatorBuilder: (context, index) => Divider(
               color: Colors.black.withOpacity(0.3),
             ),
-        itemCount: food.ingredients!.length);
+        itemCount: food!.ingredients!.length);
   }
 }

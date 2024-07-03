@@ -7,11 +7,11 @@ import 'package:flutter_food_app/features/foods/domain/entity/food_entity.dart';
 class FavoriteFoodBodyView extends StatelessWidget {
   const FavoriteFoodBodyView({
     super.key,
-    required this.food,
+    this.food,
     required this.onBackTap,
   });
 
-  final FoodEntity food;
+  final FoodEntity? food;
   final onBackTap;
 
   @override
@@ -22,7 +22,7 @@ class FavoriteFoodBodyView extends StatelessWidget {
       child: Stack(
         children: [
           CachedNetworkImage(
-            imageUrl: food.thumbnail ?? "",
+            imageUrl: food?.thumbnail ?? "",
             width: double.infinity,
             height: (size.height / 2) + 50,
             fit: BoxFit.cover,

@@ -31,7 +31,7 @@ class FoodListScreen extends StatelessWidget {
                     context.read<FoodListBloc>().add(FoodListGetFoodsEvent()),
                 child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.only(top: 24),
+                    padding: const EdgeInsets.only(top: 36),
                     itemCount: state.foods.length,
                     itemBuilder: (context, index) {
                       final food = state.foods[index];

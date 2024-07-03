@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/favorite_food_detail_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_detail_screen/widgets/favorite_food_body_view.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/favorite_food_detail_screen/widgets/favorite_food_panel_view.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/widgets/error_view.dart';
+import 'package:flutter_food_app/features/foods/presentation/widgets/loading_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -21,17 +23,16 @@ class FavoriteFoodDetailScreen extends StatelessWidget {
           if (state is FavoriteFoodDetailLoadingState) {
             return const Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: LoadingView(),
               ),
             );
           }
 
           if (state is FavoriteFoodDetailGetFoodErrorState) {
-            return const Scaffold(
-              body: Center(
-                child: Text("Error get food"),
-              ),
-            );
+            return Scaffold(
+                body: ErrorView(
+              message: state.message,
+            ));
           }
 
           if (state is FavoriteFoodDetailGetFoodSuccessState) {

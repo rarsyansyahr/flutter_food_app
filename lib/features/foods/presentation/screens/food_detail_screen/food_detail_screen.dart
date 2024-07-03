@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/features/foods/domain/entity/food_entity.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_detail_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/widgets/error_view.dart';
+import 'package:flutter_food_app/features/foods/presentation/widgets/loading_view.dart';
 
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -24,15 +26,15 @@ class FoodDetailScreen extends StatelessWidget {
       builder: (context, state) {
         if (state is FoodDetailLoadingState) {
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: LoadingView(),
           );
         }
 
         if (state is FoodDetailGetFoodErrorState) {
           return Scaffold(
               appBar: AppBar(),
-              body: Center(
-                child: Text(state.message, textAlign: TextAlign.center),
+              body: ErrorView(
+                message: state.message,
               ));
         }
 

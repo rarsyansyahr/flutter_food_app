@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/bloc/food_list_bloc.dart';
+import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/widgets/error_view.dart';
 import 'package:flutter_food_app/features/foods/presentation/screens/food_list_screen/widgets/food_list_item.dart';
+import 'package:flutter_food_app/features/foods/presentation/widgets/loading_view.dart';
 import 'package:go_router/go_router.dart';
 
 class FoodListScreen extends StatelessWidget {
@@ -13,12 +15,13 @@ class FoodListScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           if (state is FoodListLoadingState) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingView();
           }
 
           if (state is FoodListGetFoodsErrorState) {
-            return Center(
-                child: Text(state.message, textAlign: TextAlign.center));
+            return ErrorView(
+              message: state.message,
+            );
           }
 
           if (state is FoodListGetFoodsSuccessState) {
